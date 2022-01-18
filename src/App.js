@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      displayCityData: false,
+      cityData: [],
+      searchQuery: ''
+    }
+  }
+
+  handleSubmit = e =>{
+    e.preventDefault();
+      this.setState({
+        searchQuery: e.target.city.value
+      });
+      
+    }
+    
+    getCityInfo = async () => {
+      
+      let cityResults = await axios.get(`https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`)
+      
+      console.log(cityResults);
+    }
+    
+  
+
+
+
+  render () {
+    console.log(this.state.searchQuery);
+    return (
+      <>
+      <header>
+       <h1>City Explorer</h1>
       </header>
-    </div>
-  );
+      <main>
+        <form onSubmit={this.handleSubmit}>
+        <label>Pick a City!
+          <input name="city" type="text" />  
+        </label>  
+        <button onClick={this.handleClick}>Explore</button>
+        </form>
+      </main>
+      </>
+    )
+  }
 }
-
 export default App;
