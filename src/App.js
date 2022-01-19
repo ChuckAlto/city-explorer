@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
+import './App.css'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -47,7 +49,7 @@ class App extends React.Component {
         </header>
         <main>
           <form onSubmit={this.getCityInfo}>
-            <label>enter a City!
+            <label>Enter a City!
               <input type="text" onInput={this.handleSubmit} />
             </label>
             <button onClick={this.handleClick}>Explore</button>
