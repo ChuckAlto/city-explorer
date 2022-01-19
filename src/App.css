@@ -75,3 +75,6 @@
 button:hover {
   background-color: tomato;
 }
+.error {
+  text-align: center;
+}
