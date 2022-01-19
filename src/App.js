@@ -12,9 +12,11 @@ class App extends React.Component {
       displayCityData: false,
       cityData: {},
       searchQuery: '',
-      showMapAndCityInfo: false
+      showMapAndCityInfo: false,
+      renderError: false,
+      errorMessage: '',
     }
-  }
+  } 
 
   handleSubmit = e => {
     this.setState({
@@ -27,16 +29,24 @@ class App extends React.Component {
   getCityInfo = async e => {
     e.preventDefault();
 
-    let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`
+    try {
 
-    let cityResults = await axios.get(url)
-    console.log(cityResults.data)
-    this.setState({
-      cityData: cityResults.data[0],
-      showMapAndCityInfo: true
-    })
+      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`
+      
+      let cityResults = await axios.get(url)
+      console.log(cityResults.data)
+      this.setState({
+        cityData: cityResults.data[0],
+        showMapAndCityInfo: true
+      })
+      } catch (error){
+          console.log(`Error Occured: ${error.response.status}, City Not Found`);
+        this.setState({
+          renderError: true,
+          errorMessage: `Error Occured: ${error.response.status}, City Not Found`
+        })
+    } 
   }
-
 
 
 
@@ -55,13 +65,17 @@ class App extends React.Component {
             <button onClick={this.handleClick}>Explore</button>
           </form>
           <Card>
-
+            <div className='error'>
+            <Card.Text>{this.state.renderError}{this.state.errorMessage}</Card.Text>
+            </div>
           {
             this.state.showMapAndCityInfo &&
             <article>
+              
               <Card.Header><h3>{this.state.cityData.display_name}</h3></Card.Header>
               <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&zoom=13&center=${this.state.cityData.lat},${this.state.cityData.lon}`} alt={`map of ${this.state.cityData.display_name}`} />
               <Card.Text>lat: {this.state.cityData.lat} lon: {this.state.cityData.lon}</Card.Text>
+            
             </article>
           }
           </Card>
