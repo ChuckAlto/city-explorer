@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+ article {
+   margin-left: 3vw;
+   margin-top: 5vw;
+   border: 1vw groove goldenrod;
+   display: inline-block;
+   padding: 1vw;
+   background-color: white;
+ }
+
+ * {
+   background-color: whitesmoke;
+ }
+
+ form {
+   margin-left: 42%;
+   border: .2vw groove blue;
+   display: inline-block;
+   padding: .3vw;
+ }
+ header {
+   text-align: center;
+   font-size: xx-large;
+ }
+
+ label {
+   margin-right: .3vw;
+ }
+ input {
+   margin-left: .3vw;
+ }
+
+ button {
+   background-color: blue;
+   color: whitesmoke;
+   
+ }
+button:hover {
+  background-color: tomato;
+}
