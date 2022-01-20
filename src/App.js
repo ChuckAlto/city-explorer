@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+import { Card, ListGroup } from 'react-bootstrap/';
 
 import './App.css'
 
@@ -15,6 +15,8 @@ class App extends React.Component {
       showMapAndCityInfo: false,
       renderError: false,
       errorMessage: '',
+      weatherData: [],
+      showWeatherData: false,
     }
   } 
 
@@ -34,24 +36,52 @@ class App extends React.Component {
       let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`
       
       let cityResults = await axios.get(url)
-      console.log(cityResults.data)
+      // console.log(cityResults.data)
       this.setState({
         cityData: cityResults.data[0],
         showMapAndCityInfo: true
       })
-      } catch (error){
-          console.log(`Error Occured: ${error.response.status}, City Not Found`);
-        this.setState({
-          renderError: true,
-          errorMessage: `Error Occured: ${error.response.status}, City Not Found`
-        })
+
+
+      let serverUrl = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`;
+      let weatherResults = await axios.get(serverUrl);
+      
+      console.log(serverUrl);
+      console.log(weatherResults.data);
+      this.setState({
+        weatherData: weatherResults.data,
+        showWeatherData: true,
+      })
+
+
+    } catch (error){
+      console.log(`Error Occurred: ${error.response.status}, City Not Found`);
+      this.setState({
+        renderError: true,
+        errorMessage: `Error Occurred: ${error.response.status}, City Not Found`
+      })
     } 
+    
   }
+
+    
+  
+
+    
+  
+
 
 
 
   render() {
-    console.log(this.state.searchQuery);
+    console.log(this.state);
+    console.log(this.state.weatherData.data);
+
+    let weatherToRender = this.state.weatherData.map((weather, idx) => (
+      <ListGroup.Item>
+        Date: {weather.date}, {weather.description} 
+      </ListGroup.Item>
+    ));
     return (
       <>
         <header>
@@ -70,7 +100,7 @@ class App extends React.Component {
             </div>
           {
             this.state.showMapAndCityInfo &&
-            <article>
+            <article className='art1'>
               
               <Card.Header><h3>{this.state.cityData.display_name}</h3></Card.Header>
               <Card.Img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&zoom=13&center=${this.state.cityData.lat},${this.state.cityData.lon}`} alt={`map of ${this.state.cityData.display_name}`} />
@@ -79,6 +109,16 @@ class App extends React.Component {
             </article>
           }
           </Card>
+
+          <article>
+            {
+              this.state.showWeatherData &&
+              <ListGroup>
+                {weatherToRender}
+              </ListGroup>
+            }
+
+          </article>
         </main>
       </>
     )
