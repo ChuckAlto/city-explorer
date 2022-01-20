@@ -36,7 +36,7 @@
     transform: rotate(360deg);
   }
 }
- article {
+ .art1 {
    margin-left: 3vw;
    margin-top: 5vw;
    border: 1vw groove goldenrod;
