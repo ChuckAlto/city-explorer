@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { Card, ListGroup, Container, ListGroupItem } from 'react-bootstrap/';
+import { Card, ListGroup, } from 'react-bootstrap/';
 // import Weather from './Weather';
 import './App.css'
 
