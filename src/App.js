@@ -19,6 +19,8 @@ class App extends React.Component {
       showWeatherData: false,
       errorMessageTwo: '',
       renderErrorTwo: false,
+      movieData: [],
+      showMovieData: false,
     }
   }
 
@@ -63,6 +65,7 @@ class App extends React.Component {
       })
     }
     this.getWeatherInfo();
+    this.getMovieInfo();
   }
 
 
@@ -90,13 +93,24 @@ class App extends React.Component {
 
   }
 
+  getMovieInfo = async () => {
 
+    try{
+      let movieUrl = `${process.env.REACT_APP_SERVER_URL}/movies?location=${this.state.searchQuery}`;
+      let movieResults = await axios.get(movieUrl);
 
+      this.setState({
+        movieData: movieResults.data,
+        showMovieData: true,
+      })
 
-
-
-
-
+    } catch (error){
+      this.setState({
+        renderErrorThree: false,
+        errorMessageThree: `Error Occurred: Error Status 500`
+      })
+    }
+  }
 
 
   render() {
@@ -104,13 +118,32 @@ class App extends React.Component {
     // console.log(this.state.weatherData.data);
 
     let weatherToRender = this.state.weatherData.map((weather, idx) => (
-      <div>
+      <div key={idx}>
 
-      <ListGroup.Item key={idx}>
+      <ListGroup.Item>
         Date: {weather.date},
       </ListGroup.Item>   
       <ListGroup.Item>
         High: {weather.max_temp}, Low: {weather.min_temp},    {weather.description}
+      </ListGroup.Item>
+    </div>
+    ));
+
+    let movieToRender = this.state.movieData.map((movie, idx) => (
+      <div key={idx}>
+
+      <ListGroup.Item>
+        Title:  {movie.title},
+      </ListGroup.Item>   
+      <Card>
+        <Card.Img
+          src={movie.poster}
+          alt={movie.overview}>       
+        </Card.Img>
+        <Card.Text>{movie.overview}</Card.Text>
+      </Card>
+      <ListGroup.Item>
+        Release Date: {movie.release}
       </ListGroup.Item>
     </div>
     ));
@@ -143,9 +176,6 @@ class App extends React.Component {
 
               </article>
             }
-
-
-
           </Card>
             {
               this.state.showWeatherData &&
@@ -153,6 +183,16 @@ class App extends React.Component {
                <ListGroup>
                   <ListGroup.Item>
                     {weatherToRender}
+                  </ListGroup.Item>
+                </ListGroup>
+              </article>
+            }    
+            {
+              this.state.showMovieData &&
+              <article>
+               <ListGroup>
+                  <ListGroup.Item>
+                    {movieToRender}
                   </ListGroup.Item>
                 </ListGroup>
               </article>
