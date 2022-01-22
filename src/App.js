@@ -43,7 +43,8 @@ class App extends React.Component {
       // console.log(cityResults.data)
       this.setState({
         cityData: cityResults.data[0],
-        showMapAndCityInfo: true
+        showMapAndCityInfo: true,
+        renderError: false,
       })
 
       // let serverUrl = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`;
@@ -118,7 +119,7 @@ class App extends React.Component {
     // console.log(this.state.weatherData.data);
 
     let weatherToRender = this.state.weatherData.map((weather, idx) => (
-      <div key={idx}>
+    <div key={idx} className='weatherDiv'>
 
       <ListGroup.Item>
         Date: {weather.date},
@@ -130,7 +131,7 @@ class App extends React.Component {
     ));
 
     let movieToRender = this.state.movieData.map((movie, idx) => (
-      <div key={idx}>
+    <div key={idx} className='movieDiv'>
 
       <ListGroup.Item>
         Title:  {movie.title},

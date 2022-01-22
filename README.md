@@ -35,3 +35,4 @@ Finish time: 8:00 tuesday
 Actual time needed to complete: 8 hours
 
 <img src="./WRRC.png" alt="wrrc" />
+<img src="./wrrc(1).jpg" alt="wrrc2" />
