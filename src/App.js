@@ -75,7 +75,7 @@ class App extends React.Component {
 
 
     } catch (error) {
-      console.log(`Error Occurred: ${error.response.status}, City Not Found`);
+      // console.log(`Error Occurred: ${error.response.status}, City Not Found`);
       this.setState({
         renderErrorTwo: true,
         errorMessageTwo: `Error Occurred: error status 500`
