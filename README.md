@@ -71,3 +71,4 @@ Finish time: 5:00 Friday
 Actual time needed to complete: 12 hours maybe
 
 <img src="./WRRC_API_Diagram_CJ.png" alt="wrrc3" >
+<img src="./wrrc4.jpg" alt="wrrc4">
