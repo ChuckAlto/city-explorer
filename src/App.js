@@ -47,16 +47,6 @@ class App extends React.Component {
         renderError: false,
       })
 
-      // let serverUrl = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`;
-      // let weatherResults = await axios.get(serverUrl);
-
-      // console.log(serverUrl);
-      // console.log(weatherResults.data);
-      // this.setState({
-      //   weatherData: weatherResults.data,
-      //   showWeatherData: true,
-      // })
-
 
     } catch (error) {
       console.log(`Error Occurred: ${error.response.status}, City Not Found`);
