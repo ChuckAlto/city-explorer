@@ -108,17 +108,7 @@ class App extends React.Component {
     // console.log(this.state);
     // console.log(this.state.weatherData.data);
 
-    let weatherToRender = this.state.weatherData.map((weather, idx) => (
-    <div key={idx} className='weatherDiv'> 
-
-      <ListGroup.Item>
-        Date: {weather.date},
-      </ListGroup.Item>   
-      <ListGroup.Item>
-        High: {weather.max_temp}, Low: {weather.min_temp},    {weather.description}
-      </ListGroup.Item>
-    </div>
-    ));
+    
 
     let movieToRender = this.state.movieData.map((movie, idx) => (
     <div key={idx} className='movieDiv'>
