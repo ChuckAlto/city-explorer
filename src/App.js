@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { Card, ListGroup, } from 'react-bootstrap/';
-// import Weather from './Weather';
 import './App.css'
+import Weather from './Weather';
 
 
 class App extends React.Component {
@@ -77,8 +77,8 @@ class App extends React.Component {
     } catch (error) {
       // console.log(`Error Occurred: ${error.response.status}, City Not Found`);
       this.setState({
-        renderErrorTwo: true,
-        errorMessageTwo: `Error Occurred: error status 500`
+        renderError: true,
+        errorMessage: `Weather Error Occurred: error status 500`
       })
     }
 
@@ -97,8 +97,8 @@ class App extends React.Component {
 
     } catch (error){
       this.setState({
-        renderErrorThree: false,
-        errorMessageThree: `Error Occurred: Error Status 500`
+        renderError: true,
+        errorMessage: `Movie Error Occurred: Error Status 500`
       })
     }
   }
@@ -109,7 +109,7 @@ class App extends React.Component {
     // console.log(this.state.weatherData.data);
 
     let weatherToRender = this.state.weatherData.map((weather, idx) => (
-    <div key={idx} className='weatherDiv'>
+    <div key={idx} className='weatherDiv'> 
 
       <ListGroup.Item>
         Date: {weather.date},
@@ -170,23 +170,17 @@ class App extends React.Component {
           </Card>
             {
               this.state.showWeatherData &&
-              <article>
-               <ListGroup>
-                  <ListGroup.Item>
-                    {weatherToRender}
-                  </ListGroup.Item>
-                </ListGroup>
-              </article>
+              <Weather weatherData={this.state.weatherData} />             
             }    
             {
               this.state.showMovieData &&
-              <article>
+              
                <ListGroup>
                   <ListGroup.Item>
                     {movieToRender}
                   </ListGroup.Item>
                 </ListGroup>
-              </article>
+            
             }    
         </main>
       </>
